@@ -1,0 +1,27 @@
+<hibernate-mapping xmlns="http://www.hibernate.org/xsd/hibernate-mapping">
+<class name="io.github.eperatis.model.Note" table="notes">
+    <id name="id" type="string" column="id"/>
+    <property name="nev" column="nev" type="string"/>
+    <property name="hozzaAdasDatuma" column="hozza_adas_datuma" type="LocalDate"/>
+    <property name="kategoria" column="kategoria">
+        <type name="org.hibernate.type.EnumType">
+            <param name="enumClass">io.github.eperatis.model.Kategoria</param>
+            <param name="useNamed">true</param>
+        </type>
+    </property>
+    <property name="fontossag" column="fontossag" type="int"/>
+    <list name="jegyzetek" cascade="all" fetch="join" lazy="false">
+        <key column="jegyzetek" not-null="true"/>
+        <list-index column="idx"/>
+        <one-to-many class="io.github.eperatis.model.Jegyzet"/>
+    </list>
+</class>
+    
+    <class name="io.github.eperatis.model.Jegyzet" table="jegyzet">
+        <id name="id" column="id" type="int">
+            <generator class="native"/>
+        </id>
+        <property name="jegyzet" column="jegyzet" type="string"/>
+    </class>
+
+</hibernate-mapping>
